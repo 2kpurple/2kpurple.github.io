@@ -12,3 +12,6 @@ github_username:  2kpurple
 
 # Build settings
 markdown: kramdown
+
+# peramlink
+permalink: /:year/:month/:day/:title/
