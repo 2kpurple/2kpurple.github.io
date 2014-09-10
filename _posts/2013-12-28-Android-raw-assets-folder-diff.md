@@ -17,12 +17,12 @@ tags:
 
 ####res/raw和assets的读取方法：
 - 读取res/raw下的文件资源，通过以下方式获取输入流来进行写操作
-	{% highlight java %}
-		InputStream is = getResources().openRawResource(R.id.filename);
-	{% endhighlight %}
+{% highlight java %}
+InputStream is = getResources().openRawResource(R.id.filename);
+{% endhighlight %}
 - 读取assets下的文件资源，通过以下方式获取输入流来进行写操作
-	{% highlight java %}
-		AssetManager am = null;  
-		am = getAssets();  
-		InputStream is = am.open("filename");
-	{% endhighlight %}
+{% highlight java %}
+AssetManager am = null;  
+am = getAssets();  
+InputStream is = am.open("filename");
+{% endhighlight %}
