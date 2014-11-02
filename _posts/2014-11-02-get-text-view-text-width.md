@@ -9,12 +9,14 @@ categories: Android
 
 项目中的其他地方也有这样的需求，故直接使用了那一块的代码。如下
 
+{% highlight java %}
 	public float getTextWidth(Context Context, String text, int textSize){
 		TextPaint paint = new TextPaint();
 		float scaledDensity = Context.getResource().getDisplayMetrics().scaledDensity;
 		paint.setTextSize(scaledDensity * textSize);
 		return paint.measureText(text);
 	}
+{% endhighlight %}
 	
 这里是使用了TextPaint的measureText方法。
 
@@ -32,6 +34,7 @@ categories: Android
 
 代码如下
 
+{% highlight java %}
 	public class MainActivity extends Activity {
 	
 	private final static String TAG = "MainActivity";
@@ -71,6 +74,7 @@ categories: Android
 		
 	}
 }
+{% endhighlight %}
 
 当测试字符串为: "测试中文"时，结果如下
 	
