@@ -15,3 +15,6 @@ markdown: kramdown
 
 # peramlink
 permalink: /:year/:month/:day/:title/
+
+analytics :
+    provider : custom
