@@ -3,6 +3,7 @@ layout: post
 title:  "获取TextView显示的字符串宽度"
 date:   2014-11-02 11:47:43
 categories: Android
+analytics: true
 ---
 
 工作上有业务需要判断textview是否换行，我的做法是判断textview要显示的字符串的宽度是否超过我设定的宽度，若超过则会执行换行。
