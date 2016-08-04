@@ -1,0 +1,657 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|Menlo:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.png?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Java堆栈Java把内存划分为两种：一种是堆，一种是栈。
+栈存放一些基本类型的变量和对象的引用变量。java自动释放掉所分配的空间，该内存空间可以立即被另作他用，存取速度比堆要快。
+缺点是，存在栈中的数据大小与生存期必须确定的，缺乏灵活性。栈中主要存放一些基本类型的变量（int,short,long,byte,float,double,boolean,char）和对象句柄。数据是可以共享的。
+假">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java堆栈，以及eqauls和==的区别">
+<meta property="og:url" content="http://2kpurple.github.io/2016-08-04/java_heap_stack_equals/index.html">
+<meta property="og:site_name" content="PurpleK's Studio">
+<meta property="og:description" content="Java堆栈Java把内存划分为两种：一种是堆，一种是栈。
+栈存放一些基本类型的变量和对象的引用变量。java自动释放掉所分配的空间，该内存空间可以立即被另作他用，存取速度比堆要快。
+缺点是，存在栈中的数据大小与生存期必须确定的，缺乏灵活性。栈中主要存放一些基本类型的变量（int,short,long,byte,float,double,boolean,char）和对象句柄。数据是可以共享的。
+假">
+<meta property="og:updated_time" content="2016-08-04T10:13:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java堆栈，以及eqauls和==的区别">
+<meta name="twitter:description" content="Java堆栈Java把内存划分为两种：一种是堆，一种是栈。
+栈存放一些基本类型的变量和对象的引用变量。java自动释放掉所分配的空间，该内存空间可以立即被另作他用，存取速度比堆要快。
+缺点是，存在栈中的数据大小与生存期必须确定的，缺乏灵活性。栈中主要存放一些基本类型的变量（int,short,long,byte,float,double,boolean,char）和对象句柄。数据是可以共享的。
+假">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Java堆栈，以及eqauls和==的区别 | PurpleK's Studio </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">PurpleK's Studio</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">「今、君が好きで」</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java堆栈，以及eqauls和==的区别
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-04T16:47:35+08:00" content="2016-08-04">
+              2016-08-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Java堆栈"><a href="#Java堆栈" class="headerlink" title="Java堆栈"></a>Java堆栈</h1><p>Java把内存划分为两种：一种是堆，一种是栈。</p>
+<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><p>存放一些基本类型的变量和对象的引用变量。java自动释放掉所分配的空间，该内存空间可以立即被另作他用，存取速度比堆要快。</p>
+<p>缺点是，存在栈中的数据大小与生存期必须确定的，缺乏灵活性。栈中主要存放一些基本类型的变量（int,short,long,byte,float,double,boolean,char）和对象句柄。数据是可以共享的。</p>
+<p>假设我们同时定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> a = <span class="number">3</span>;</div><div class="line"><span class="keyword">int</span> b = <span class="number">3</span>;</div></pre></td></tr></table></figure>
+<p>编译器先处理 <code>int a = 3</code>;首先它会在栈中创建一个变量为a的引用，然后查找栈中是否有3这个值，如果没有找到，就将3存进来，然后讲a指向3，接着就处理 <code>int  b = 3</code>;会先创建变量b的引用，因为栈中已经存在3这个值，那么就直接讲b指向3.如果这时在令<code>a = 4</code>，那么编译器会重新搜索栈中是否有4这个值，如果没有就讲4存进来，如果有就把a指向4，因此a不会影响到b的值。</p>
+<p>要注意的是，这种数据共享与两个对象的引用指向同一个对象的这种共享不同，因为这种情况下a的修改不会影响到b的值，它是由编译器完成的，它有利于节省空间，而一个对象引用变量修改了这个对象的内部状态，会影响到另一个对象引用变量。 </p>
+<h2 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h2><p>存放由new创建的对象和数组（可以在栈中定义一个特殊的变量，让栈中这个变量的取值等于数组或对象在堆内存中的首地址，栈中这个变量就成了数组或对象的引用变量，就相对于一个名字。以后就可以使用栈中的引用变量来访问堆中的数组或对象。）。是有java虚拟机自动垃圾回收器来管理的。运行时动态分配空间。</p>
+<p>因为运行时分配内存，存取速度较慢。</p>
+<p><code>String str = new String(&quot;abc&quot;);</code> 这种是用new()来新建对象的，它会存放在堆中，每调用一次就会创建一个新的对象。</p>
+<p><code>String str = &quot;abc&quot;;</code> 这种是存放在栈中，创建一个String类的对象引用变量str，然后在栈中查找有没有存放abc，如果没有，则将abc存放在栈中，并令str指向abc，如果有abc，则直接令str指向abc。</p>
+<p>比较类里面的数值是否相等，用equals()方法，比较两个包装类的引用是否指向同一个对象时，用==。</p>
+<p>比如下面的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">String str1 = <span class="string">"abc"</span>;</div><div class="line">String str2 = <span class="string">"abc"</span>;</div><div class="line"></div><div class="line">System.out.println(str1==str2); <span class="comment">//true;</span></div></pre></td></tr></table></figure>
+<p>输出为true，可以看出str1和str2是指向同一个对象的。这里是创建了两个abc字符串，在内存中其实只存在一个对象，这种写法有利于节省内存空间，同时它也可以在一定程度上提高程序的运行速度。因为jvm会自动根据栈中数据的实际情况来决定是否有必要创建新对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">String str1 = <span class="keyword">new</span> String(<span class="string">"abc"</span>);</div><div class="line">String str2 = <span class="keyword">new</span> String(<span class="string">"abc"</span>);</div><div class="line">String str3 = <span class="string">"abc"</span>;</div><div class="line">System.out.println(str1==str2); <span class="comment">//false;</span></div><div class="line">System.out.println(str1==str3); <span class="comment">//false</span></div></pre></td></tr></table></figure>
+<p>因为用了new，生成了两个不同的对象，是在堆中创建新的对象，而不管其他字符串值是否相等，是有必要创建新对象，从而加重了程序的负担。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag">#Java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015-09-25/android-studio-cannot-resolve-symbol-solution/" rel="next" title="Android Studio cannot resolve symbol 解决办法">
+                <i class="fa fa-chevron-left"></i> Android Studio cannot resolve symbol 解决办法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="PurpleK" />
+          <p class="site-author-name" itemprop="name">PurpleK</p>
+          <p class="site-description motion-element" itemprop="description">{*≧∀≦}</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/2kpurple" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2kpurplerose" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java堆栈"><span class="nav-number">1.</span> <span class="nav-text">Java堆栈</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#栈"><span class="nav-number">1.1.</span> <span class="nav-text">栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆"><span class="nav-number">1.2.</span> <span class="nav-text">堆</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PurpleK</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,713 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|Menlo:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,传感器," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.png?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="传感器类型
+TYPE_ACCELEROMETER 加速度传感器
+TYPE_AMBIENT_TEMPERATURE 温度传感器(测量室温)
+TYPE_GRAVITY 重力传感器
+TYPE_GYROSCOPE 陀螺仪
+TYPE_LIGHT 光传感器
+TYPE_LINEAR_ACCELERATION 线性加速器
+TYPE_MAGNETIC_FIELD 磁力传感器
+TYPE_ORIENTATION 方向传">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android中传感器的values介绍">
+<meta property="og:url" content="http://2kpurple.github.io/2015-09-15/android-sensor-introduction/index.html">
+<meta property="og:site_name" content="PurpleK's Studio">
+<meta property="og:description" content="传感器类型
+TYPE_ACCELEROMETER 加速度传感器
+TYPE_AMBIENT_TEMPERATURE 温度传感器(测量室温)
+TYPE_GRAVITY 重力传感器
+TYPE_GYROSCOPE 陀螺仪
+TYPE_LIGHT 光传感器
+TYPE_LINEAR_ACCELERATION 线性加速器
+TYPE_MAGNETIC_FIELD 磁力传感器
+TYPE_ORIENTATION 方向传">
+<meta property="og:image" content="http://developer.android.com/images/axis_device.png">
+<meta property="og:updated_time" content="2016-08-04T09:42:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android中传感器的values介绍">
+<meta name="twitter:description" content="传感器类型
+TYPE_ACCELEROMETER 加速度传感器
+TYPE_AMBIENT_TEMPERATURE 温度传感器(测量室温)
+TYPE_GRAVITY 重力传感器
+TYPE_GYROSCOPE 陀螺仪
+TYPE_LIGHT 光传感器
+TYPE_LINEAR_ACCELERATION 线性加速器
+TYPE_MAGNETIC_FIELD 磁力传感器
+TYPE_ORIENTATION 方向传">
+<meta name="twitter:image" content="http://developer.android.com/images/axis_device.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Android中传感器的values介绍 | PurpleK's Studio </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">PurpleK's Studio</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">「今、君が好きで」</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android中传感器的values介绍
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-09-15T18:39:40+08:00" content="2015-09-15">
+              2015-09-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="传感器"><a href="#传感器" class="headerlink" title="传感器"></a>传感器</h2><h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><ul>
+<li>TYPE_ACCELEROMETER 加速度传感器</li>
+<li>TYPE_AMBIENT_TEMPERATURE 温度传感器(测量室温)</li>
+<li>TYPE_GRAVITY 重力传感器</li>
+<li>TYPE_GYROSCOPE 陀螺仪</li>
+<li>TYPE_LIGHT 光传感器</li>
+<li>TYPE_LINEAR_ACCELERATION 线性加速器</li>
+<li>TYPE_MAGNETIC_FIELD 磁力传感器</li>
+<li>TYPE_ORIENTATION 方向传感器</li>
+<li>TYPE_PRESSURE 压力传感器</li>
+<li>TYPE_PROXIMITY 距离传感器</li>
+<li>TYPE_RELATIVE_HUMIDITY 相对湿度传感器</li>
+<li>TYPE_ROTATION_VECTOR 旋转向量</li>
+<li>TYPE_TEMPERATURE 温度传感器(设备温度)</li>
+</ul>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>以下使用到的所有坐标系均以下图为准<br><img src="http://developer.android.com/images/axis_device.png" alt="坐标轴"></p>
+<h3 id="加速度传感器-TYPE-ACCELEROMETER"><a href="#加速度传感器-TYPE-ACCELEROMETER" class="headerlink" title="加速度传感器(TYPE_ACCELEROMETER)"></a>加速度传感器(TYPE_ACCELEROMETER)</h3><p>所有的数值都以(m/s^2)为单位:</p>
+<ul>
+<li>values[0]: x轴减去重力轴x的加速度</li>
+<li>values[1]: y轴减去重力轴y的加速度</li>
+<li>values[2]: z轴减去重力轴x的加速度</li>
+</ul>
+<p>因此在手机静止平放时，values[0]和values[1]应该是0，而values[2]应该为-g。(g为重力加速度)</p>
+<h3 id="磁力传感器-TYPE-MAGNETIC-FIELD"><a href="#磁力传感器-TYPE-MAGNETIC-FIELD" class="headerlink" title="磁力传感器(TYPE_MAGNETIC_FIELD)"></a>磁力传感器(TYPE_MAGNETIC_FIELD)</h3><p>所有的数值都是以微特斯拉(uT)为单位测量设备周围的x，y，z轴的磁力。</p>
+<h3 id="陀螺仪传感器-TYPE-GYROSCOPE"><a href="#陀螺仪传感器-TYPE-GYROSCOPE" class="headerlink" title="陀螺仪传感器(TYPE_GYROSCOPE)"></a>陀螺仪传感器(TYPE_GYROSCOPE)</h3><p>values以r/s为单位来测量设备x，y，z的旋转速率。规定逆时针为正方向。</p>
+<h3 id="光传感器-TYPE-LIGHT"><a href="#光传感器-TYPE-LIGHT" class="headerlink" title="光传感器(TYPE_LIGHT)"></a>光传感器(TYPE_LIGHT)</h3><p>values[0]: 以lux为单位表示周围的亮度</p>
+<h3 id="气压传感器-TYPE-PRESSURE"><a href="#气压传感器-TYPE-PRESSURE" class="headerlink" title="气压传感器(TYPE_PRESSURE)"></a>气压传感器(TYPE_PRESSURE)</h3><p>values[0]: 以hPa为单位表示周围的气压</p>
+<h3 id="距离传感器-TYPE-PROXIMITY"><a href="#距离传感器-TYPE-PROXIMITY" class="headerlink" title="距离传感器(TYPE_PROXIMITY)"></a>距离传感器(TYPE_PROXIMITY)</h3><p>values[0]: 以cm为单位表示传感器到物体之间的距离</p>
+<h3 id="重力传感器-TYPE-GRAVITY"><a href="#重力传感器-TYPE-GRAVITY" class="headerlink" title="重力传感器(TYPE_GRAVITY)"></a>重力传感器(TYPE_GRAVITY)</h3><p>三维向量表示重力的方向和大小。单位为m/s^2。</p>
+<p>当设备静止的时候，重力传感器的输出恒等于加速度传感器的输出。</p>
+<h3 id="线性加速度传感器-TYPE-LINEAR-ACCELERATION"><a href="#线性加速度传感器-TYPE-LINEAR-ACCELERATION" class="headerlink" title="线性加速度传感器(TYPE_LINEAR_ACCELERATION)"></a>线性加速度传感器(TYPE_LINEAR_ACCELERATION)</h3><p>三维向量表示设备x，y，z方向上的加速度但不包括重力。单位为m/s^2。</p>
+<p>加速度传感器、重力传感器、线性加速度传感器的输出存在以下关系：</p>
+<blockquote>
+<p>加速度传感器 = 重力传感器 + 线性加速度传感器</p>
+</blockquote>
+<h3 id="旋转向量传感器-TYPE-ROTATION-VECTOR"><a href="#旋转向量传感器-TYPE-ROTATION-VECTOR" class="headerlink" title="旋转向量传感器(TYPE_ROTATION_VECTOR)"></a>旋转向量传感器(TYPE_ROTATION_VECTOR)</h3><p>旋转矢量用角和轴的组合来代表设备的取向，即设备绕着轴（X、Y或Z）旋转角度θ。</p>
+<p>values分别是x<em>sin(θ/2), y</em>sin(θ/2), z*sin(θ/2)</p>
+<p>(这个我也不太懂</p>
+<h3 id="方向传感器-TYPE-ORIENTATION"><a href="#方向传感器-TYPE-ORIENTATION" class="headerlink" title="方向传感器(TYPE_ORIENTATION)"></a>方向传感器(TYPE_ORIENTATION)</h3><p>方向传感器的值都是以度(degrees)为单位，</p>
+<p>values[0]: Azimuth(向量的水平方向)。北极和y轴之间围绕z轴的角度。取值为0到359。0表示北方，90表示东方，180表示南方，270表示西方。</p>
+<p>values[1]: Pitch(仰角)。绕x轴旋转的角度，z轴向y轴旋转为正方向。</p>
+<p>values[2]: Roll。绕y轴旋转的角度，以设备顺势针旋转为正方向。</p>
+<blockquote>
+<p>注意：该传感器为软件传感器，android已废弃。改为使用旋转矢量来计算。</p>
+</blockquote>
+<h3 id="湿度传感器"><a href="#湿度传感器" class="headerlink" title="湿度传感器"></a>湿度传感器</h3><p>values[0]: 设备周围空气的相对湿度。</p>
+<blockquote>
+<p>当相对湿度和室温测量出来之后，可以计算露点(dew point)和绝对湿度(absolute humidity)。<br>计算方法详见 <a href="http://developer.android.com/reference/android/hardware/SensorEvent.html#values" target="_blank" rel="external">此处</a></p>
+</blockquote>
+<h3 id="室温传感器-TYPE-AMBIENT-TEMPERATURE"><a href="#室温传感器-TYPE-AMBIENT-TEMPERATURE" class="headerlink" title="室温传感器(TYPE_AMBIENT_TEMPERATURE)"></a>室温传感器(TYPE_AMBIENT_TEMPERATURE)</h3><p>values[0]: 室温，以摄氏度为单位。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag">#Android</a>
+          
+            <a href="/tags/传感器/" rel="tag">#传感器</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014-11-02/get-text-view-text-width/" rel="next" title="获取TextView显示的字符串宽度">
+                <i class="fa fa-chevron-left"></i> 获取TextView显示的字符串宽度
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015-09-25/android-studio-cannot-resolve-symbol-solution/" rel="prev" title="Android Studio cannot resolve symbol 解决办法">
+                Android Studio cannot resolve symbol 解决办法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="PurpleK" />
+          <p class="site-author-name" itemprop="name">PurpleK</p>
+          <p class="site-description motion-element" itemprop="description">{*≧∀≦}</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/2kpurple" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2kpurplerose" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#传感器"><span class="nav-number">1.</span> <span class="nav-text">传感器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类型"><span class="nav-number">1.1.</span> <span class="nav-text">类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意"><span class="nav-number">1.2.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加速度传感器-TYPE-ACCELEROMETER"><span class="nav-number">1.3.</span> <span class="nav-text">加速度传感器(TYPE_ACCELEROMETER)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#磁力传感器-TYPE-MAGNETIC-FIELD"><span class="nav-number">1.4.</span> <span class="nav-text">磁力传感器(TYPE_MAGNETIC_FIELD)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#陀螺仪传感器-TYPE-GYROSCOPE"><span class="nav-number">1.5.</span> <span class="nav-text">陀螺仪传感器(TYPE_GYROSCOPE)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#光传感器-TYPE-LIGHT"><span class="nav-number">1.6.</span> <span class="nav-text">光传感器(TYPE_LIGHT)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#气压传感器-TYPE-PRESSURE"><span class="nav-number">1.7.</span> <span class="nav-text">气压传感器(TYPE_PRESSURE)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#距离传感器-TYPE-PROXIMITY"><span class="nav-number">1.8.</span> <span class="nav-text">距离传感器(TYPE_PROXIMITY)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重力传感器-TYPE-GRAVITY"><span class="nav-number">1.9.</span> <span class="nav-text">重力传感器(TYPE_GRAVITY)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线性加速度传感器-TYPE-LINEAR-ACCELERATION"><span class="nav-number">1.10.</span> <span class="nav-text">线性加速度传感器(TYPE_LINEAR_ACCELERATION)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#旋转向量传感器-TYPE-ROTATION-VECTOR"><span class="nav-number">1.11.</span> <span class="nav-text">旋转向量传感器(TYPE_ROTATION_VECTOR)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方向传感器-TYPE-ORIENTATION"><span class="nav-number">1.12.</span> <span class="nav-text">方向传感器(TYPE_ORIENTATION)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#湿度传感器"><span class="nav-number">1.13.</span> <span class="nav-text">湿度传感器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#室温传感器-TYPE-AMBIENT-TEMPERATURE"><span class="nav-number">1.14.</span> <span class="nav-text">室温传感器(TYPE_AMBIENT_TEMPERATURE)</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PurpleK</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
