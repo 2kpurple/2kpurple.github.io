@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      display: block;
+      margin-top: 20px;
+      border: 1px solid black;
+    }
+
+    textarea {
+      display: block;
+      width: 80%;
+      height: 100px;
+    }
+
+    input {
+      display: block;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px ;
+    }
+
+    @font-face {
+      font-family: 'Song';
+      src: url('./fonts/shoukesong.ttf') format('truetype');
+    }
+  </style>
+
+  <script src="./lines.js"></script>
+  <title>Image Processing</title>
+</head>
+
+<body>
+  <div style="font-family: 'Song';">
+    你好
+    <input type="file" accept="image/*" onchange="handleImage(event)">
+  </div>
+  <div>
+    <textarea id="textarea">测试</textarea>
+  </div>
+  <div>
+    <label for="input_interval">间距:</label>
+    <input type="number" id="input_interval" value="100">
+    <label for="input_textsize">字体大小:</label>
+    <input type="number" id="input_textsize" value="70">
+    <label for="input_textsize">字体描边粗细:</label>
+    <input type="number" id="input_stroke_width" value="5">
+  </div>
+  <div>
+    <canvas id="canvas"></canvas>
+  </div>
+</body>
+
+</html>
