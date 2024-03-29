@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/react/lines/static/css/main.9b525148.css",
+    "main.js": "/react/lines/static/js/main.a34e58fb.js",
+    "static/media/font.ttf": "/react/lines/static/media/font.e91062b1c84e8a56dace.ttf",
+    "index.html": "/react/lines/index.html",
+    "main.9b525148.css.map": "/react/lines/static/css/main.9b525148.css.map",
+    "main.a34e58fb.js.map": "/react/lines/static/js/main.a34e58fb.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9b525148.css",
+    "static/js/main.a34e58fb.js"
+  ]
+}
